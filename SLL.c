@@ -226,7 +226,7 @@ int sllQueryspec(Sllist* lista, void*key,int(*cmp)(void*,void*)){
 void* sllRemovespec(Sllist* lista,void* key,int(*cmp)(void*,void*)){
     if(lista != NULL && key != NULL){
         Sllnode* del = lista->first;
-        Sllnode* beforedel;
+        Sllnode* beforedel = NULL;
         void* salvo;
         while(cmp(key,(void*)&del->data) == false){
             beforedel = del;
@@ -235,7 +235,13 @@ void* sllRemovespec(Sllist* lista,void* key,int(*cmp)(void*,void*)){
                 return NULL;
             }
         }
-        beforedel->next = del->next;
+        if(del != NULL){
+            if(beforedel != NULL){
+                beforedel->next = del->next;
+            }else{
+                lista->first = del->next;
+            }
+        } 
         salvo = del->data;
         free(del);
         return salvo;  

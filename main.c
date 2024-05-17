@@ -128,9 +128,9 @@ int main(){
                 if(lista != NULL && item != NULL){
                     printf("Nome: ");
                     scanf("%s", item->nome);
-                    printf("preco: ");
+                    printf("episodios: ");
                     scanf("%d", &item->episodios);
-                    printf("duracao: ");
+                    printf("nota: ");
                     scanf("%f", &item->nota);
                     if(sllRemovespec(lista, item, cmp) != NULL){
                         atual --;
@@ -149,21 +149,20 @@ int main(){
                 if(lista != NULL && item != NULL){
                     printf("Nome: ");
                     scanf("%s", item->nome);
-                    printf("preco: ");
+                    printf("episodios: ");
                     scanf("%d", &item->episodios);
-                    printf("duracao: ");
+                    printf("nota: ");
                     scanf("%f", &item->nota);
-                    if(sllQueryspec(lista,item,cmp) == true){
-                        anime *chave = (anime*) sllRemovespec(lista, item, cmp);
-                        if(chave != NULL){
-                            printf("anime encontrado ! \n");
-                            printf("Nome: %s, episodios: %d, nota: %.2f \n", chave->nome, chave->episodios, chave->nota);
-                            break;
-                        }else{
-                            printf("O anime nao foi encontrado \n");
-                            break;
-                        }
-                    }
+
+                    anime *chave = (anime*) sllRemovespec(lista, item, cmp);
+                    if(chave != NULL){
+                        printf("anime encontrado ! \n");
+                        printf("Nome: %s, episodios: %d, nota: %.2f \n", chave->nome, chave->episodios, chave->nota);
+                        break;
+                    }else{
+                        printf("O anime nao foi encontrado \n");
+                        break;
+                    }  
                 }
                 printf("erro de parametro \n");
                 break;

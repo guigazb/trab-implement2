@@ -235,7 +235,7 @@ void* sllRemovespec(Sllist* lista,void* key,int(*cmp)(void*,void*)){
                 return NULL;
             }
         }
-        beforedel = del->next;
+        beforedel->next = del->next;
         salvo = del->data;
         free(del);
         return salvo;  

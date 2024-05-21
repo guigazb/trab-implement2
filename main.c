@@ -13,27 +13,18 @@ typedef struct {
 }anime;
 
 
-void listarColecao(Sllist *lista,int atual){ // consertar traço das funções e implementação delas
-    anime *var = (anime*) sllGetfirst(lista);// consertar
+void listarColecao(Sllist *lista){ // consertar traço das funções e implementação delas
+    anime *var = (anime*) sllGetfirstcur(lista);// consertar
     int ind = 0;
-    if(lista != NULL && atual > 0){
-        /*for(i = 0; i < atual; i++){
-            printf("item %d: \n",i+1);
-            printf("nome: %s ,preco: %d ,duracao: %.2f \n", var->nome, var->preco, var->duracao);
-            var = (tipoJogo*)gameGetnext(c);
-        }*/
-        int* salvo[atual];
+    int num = sllNumNodes(lista);
+    if(lista != NULL && num > 0){
         while(var != NULL){
             printf("item %d: \n",ind + 1);
             printf("nome: %s ,preco: %d ,duracao: %.2f \n", var->nome, var->episodios, var->nota);
-            salvo[ind] = (int*)sllRemovefirst(lista);
-            var = (anime*)sllGetfirst(lista); // consertar
+            var = (anime*)sllGetnext(lista); // consertar
             ind++;
         }
-        for(int i = 0; i<atual ;i++){
-            sllInsertAsLast(lista,(void*)&salvo[i]);
-        }
-    }else if(atual <= 0){
+    }else if(num <= 0){
             printf("sem itens para imprimir \n");
         }
 }  
@@ -65,8 +56,7 @@ int main(){
     //criar cofo, inserir elementos, e para cada elemento inserido incrementar a variavel Atual para listar o cofo posteriormente
     
     int flag = true;
-    int atual;
-    void listarColecao(Sllist *lista,int atual);
+    void listarColecao(Sllist *lista);
     int cmp(void* a, void* b);
     int listaClean(Sllist* lista);
 
@@ -111,9 +101,8 @@ int main(){
                     scanf("%d", &item->episodios);
                     printf("nota: ");
                     scanf("%f", &item->nota);
-                    if(sllInsertAsLast(lista,(void*)&item) == true){ // item não é void* ,conferir depois
+                    if(sllInsertAsLast(lista,item) == true){ 
                         printf("anime inserido com sucesso \n");
-                        atual ++;
                         break;
                     }else{
                         printf("Erro ao inserir anime \n");
@@ -133,11 +122,10 @@ int main(){
                     printf("nota: ");
                     scanf("%f", &item->nota);
                     if(sllRemovespec(lista, item, cmp) != NULL){
-                        atual --;
                         printf("item removido com sucesso! \n");
                         break;
                     }else{
-                       printf("não foi possivel remover o item \n");
+                       printf("nao foi possivel remover o item \n");
                        break; 
                     }
                 }
@@ -154,7 +142,7 @@ int main(){
                     printf("nota: ");
                     scanf("%f", &item->nota);
 
-                    anime *chave = (anime*) sllRemovespec(lista, item, cmp);
+                    anime *chave = (anime*) sllQueryspec(lista, item, cmp); 
                     if(chave != NULL){
                         printf("anime encontrado ! \n");
                         printf("Nome: %s, episodios: %d, nota: %.2f \n", chave->nome, chave->episodios, chave->nota);
@@ -169,7 +157,7 @@ int main(){
             }
             case 5:{ // consertar a função de listar
                 if(lista != NULL){
-                    listarColecao(lista,atual);
+                    listarColecao(lista); // mata o código
                     break;
                 }
                 printf("erro de parametro \n");
@@ -191,9 +179,8 @@ int main(){
             }
             case 7:{
                 if(lista != NULL){
-                    if(listaClean(lista) == true){
+                    if(listaClean(lista) == true){ // quebra o código
                        printf("A colecao foi esvaziada \n");
-                       atual = 0;
                        break;
                     }else{
                       printf("A colecao nao foi esvaziada \n");

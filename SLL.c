@@ -26,6 +26,7 @@ typedef struct sllnode{
 
 typedef struct sllist{
     Sllnode* first;
+    Sllnode* cur;
 }Sllist;
 
 Sllist *sllCreate (void){
@@ -76,8 +77,17 @@ void *sllGetfirst( Sllist *lista){
         if(lista->first != NULL){
             salvo = lista->first;
             data = salvo->data;
-            free(salvo);
             return data;
+        }
+    }
+    return NULL;
+}
+
+void *sllGetfirstcur( Sllist *lista){ // necessário para getnext funcionar
+    if(lista != NULL){
+        if(lista->first != NULL){
+            lista->cur = lista->first;
+            return lista->cur->data;
         }
     }
     return NULL;
@@ -112,9 +122,7 @@ void *sllRemovelast( Sllist *lista){
         Sllnode* del;
         Sllnode* beforedel;
         void* data;
-        if(lista->first == NULL){
-            return NULL;
-        }else{
+        if(lista->first != NULL){
             del = lista->first;
             while(del->next != NULL){
                 beforedel = del;
@@ -123,8 +131,9 @@ void *sllRemovelast( Sllist *lista){
             beforedel->next = NULL;
             data = del->data;
             free(del);
-        }
+        
          return data;
+    }
     }
     return NULL;
 }
@@ -133,16 +142,14 @@ void* sllGetLast (Sllist* lista){
     if(lista != NULL){
         Sllnode* last;
         void* data;
-        if(lista->first == NULL){
-            return NULL;
-        }else{
+        if(lista->first != NULL){
             last = lista->first;
             while(last->next != NULL){
                 last = last->next;
             }
             data = last->data;
-        }
          return data;
+    }
     }
     return NULL;
 }
@@ -151,17 +158,15 @@ int sllNumNodes(Sllist* lista){
     if(lista != NULL){
         Sllnode* last;
         int num;
-        if(lista->first == NULL){
-            return 0;
-        }else{
+        if(lista->first != NULL){
             last = lista->first;
             num++;
             while(last->next != NULL){
                 num++;
                 last = last->next;
             }  
-        }
          return num;
+    }
     }
     return -1;
 }
@@ -180,14 +185,13 @@ int sllInsertafterN(Sllist* lista, void* data,int n){
             afteraux = aux->next;
             aux->next = newnode;
             newnode->next = afteraux;
-            free(aux);
             return true;
         }
     }
     return false;
 }
 
-int sllInsertafterepec(Sllist* lista,void* data,int(*cmp)(void*,void*)){
+int sllInsertafterespec(Sllist* lista,void* data,int(*cmp)(void*,void*)){
     if(lista != NULL && data != NULL){
         Sllnode* newnode = (Sllnode*)malloc(sizeof(Sllnode));
         if(newnode != NULL){
@@ -201,55 +205,96 @@ int sllInsertafterepec(Sllist* lista,void* data,int(*cmp)(void*,void*)){
             afteraux = aux->next;
             aux->next = newnode;
             newnode->next = afteraux;
-            free(aux);
+        
             return true;
         }
     }
     return false;
 }
 
-int sllQueryspec(Sllist* lista, void*key,int(*cmp)(void*,void*)){
-    if(lista != NULL && key != NULL){
-        Sllnode* aux = lista->first;
-        while(cmp(key,(void*)&aux->data) == false){
-            aux = aux->next;
-            if(cmp(sllGetLast(lista),(void*)&aux->data) == true && cmp(key,(void*)&aux->data) == false){
-                return false;
+int sllInsertbeforespec(Sllist* lista,void* data,int(*cmp)(void*,void*)){
+    Sllnode *prev, *spec;
+    if ( lista != NULL) {
+        if ( lista->first != NULL) {
+            prev = NULL; spec = lista->first;
+            int stat = cmp(spec->data, data);
+            while ( stat != true && spec->next != NULL) {
+                prev = spec; spec= spec->next;
+                stat = cmp (spec->data, data);
+                }
+                if ( stat == true) {
+                    Sllnode* newnode = (Sllnode *) malloc(sizeof(Sllnode));
+                    if ( newnode != NULL){
+                        newnode->data = data;
+                        newnode->next = spec;
+                        if( prev != NULL) {
+                        prev->next = newnode;
+                        } else {
+                        lista->first = newnode;
+                        }
+                    }
             }
         }
-        free(aux);
-        return true;  
     }
-    return false;
+    return true;
 }
 
-void* sllRemovespec(Sllist* lista,void* key,int(*cmp)(void*,void*)){
+void* sllQueryspec(Sllist* lista, void*key,int(*cmp)(void*,void*)){
     if(lista != NULL && key != NULL){
-        Sllnode* del = lista->first;
-        Sllnode* beforedel = NULL;
-        void* salvo;
-        while(cmp(key,(void*)&del->data) == false){
-            beforedel = del;
-            del = del->next;
-            if(cmp(sllGetLast(lista),(void*)&del->data) == true && cmp(key,(void*)&del->data) == false){
-                return NULL;
+        if(lista->first != NULL){
+            Sllnode* atual = lista->first;
+            int stat = cmp(atual->data,key);
+            while(stat != true && atual->next != NULL){
+                atual = atual->next;
+                stat = cmp(atual->data,key);
+            }
+            if(stat == true){
+                return atual->data;
             }
         }
-        if(del != NULL){
-            if(beforedel != NULL){
-                beforedel->next = del->next;
-            }else{
-                lista->first = del->next;
-            }
-        } 
-        salvo = del->data;
-        free(del);
-        return salvo;  
     }
     return NULL;
 }
 
-int sllDestroy(Sllist *lista){
+void* sllRemovespec(Sllist* lista,void* key,int(*cmp)(void*,void*)){
+    if(lista != NULL && key != NULL){
+        if(lista->first != NULL){
+        Sllnode* del = lista->first;
+        Sllnode* beforedel;
+        void* salvo;
+        int stat = cmp(key,del->data);
+        while(stat != true && del->next != NULL){
+            beforedel = del;
+            del = del->next;
+            stat = cmp(key,del->data);
+        }
+        if(stat == true){
+            salvo = del->data;
+            if(beforedel == NULL){
+                lista->first = del->next;
+            }else{
+                beforedel->next = del->next;
+            }
+            free(del);
+            return salvo; 
+        }
+        
+       }
+    }
+    return NULL;
+}
+
+void* sllGetnext(Sllist* lista){
+    if(lista != NULL){
+        if(lista->cur != NULL){
+            lista->cur = lista->cur->next;
+            return lista->cur->data;
+        }
+    }
+    return NULL;
+}
+
+int sllDestroy (Sllist *lista){
     if(lista != NULL){
         if(lista->first == NULL){
             free(lista);

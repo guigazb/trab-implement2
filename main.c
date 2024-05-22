@@ -13,10 +13,10 @@ typedef struct {
 }anime;
 
 
-void listarColecao(Sllist *lista){ // consertar traço das funções e implementação delas
-    anime *var = (anime*) sllGetfirstcur(lista);// consertar
+void listarColecao(Sllist *lista){ // ainda contém erros, mas lista corretamente
     int ind = 0;
     int num = sllNumNodes(lista);
+    anime *var = (anime*) sllGetfirstcur(lista);// consertar
     if(lista != NULL && num > 0){
         while(var != NULL){
             printf("item %d: \n",ind + 1);
@@ -41,7 +41,7 @@ int cmp(void* a, void* b){
     return -1;
 }
 
-int listaClean(Sllist* lista){
+int listaClean(Sllist* lista){ // aparentemente consertado, averiguar
     if(lista != NULL){
         int numItens = sllNumNodes(lista);
         for(int i = 0; i <numItens; i++){
@@ -171,6 +171,7 @@ int main(){
                         break;
                     }else{
                         printf("A colecao nao foi destruida \n");
+                        printf("esvazie a colecao antes de destruir \n");
                         break;
                     }
                 }

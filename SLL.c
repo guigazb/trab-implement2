@@ -85,9 +85,11 @@ void *sllGetfirst( Sllist *lista){
 
 void *sllGetfirstcur( Sllist *lista){ // necessário para getnext funcionar
     if(lista != NULL){
+        void* retorno;
         if(lista->first != NULL){
             lista->cur = lista->first;
-            return lista->cur->data;
+            retorno = lista->cur->data;
+            return retorno;
         }
     }
     return NULL;
@@ -124,6 +126,12 @@ void *sllRemovelast( Sllist *lista){
         void* data;
         if(lista->first != NULL){
             del = lista->first;
+            if(del->next == NULL){
+                data = del->data;
+                lista->first == NULL;
+                free(del);
+                return data;
+            }
             while(del->next != NULL){
                 beforedel = del;
                 del = del->next;
@@ -131,9 +139,8 @@ void *sllRemovelast( Sllist *lista){
             beforedel->next = NULL;
             data = del->data;
             free(del);
-        
-         return data;
-    }
+            return data;
+        }
     }
     return NULL;
 }
@@ -157,7 +164,7 @@ void* sllGetLast (Sllist* lista){
 int sllNumNodes(Sllist* lista){
     if(lista != NULL){
         Sllnode* last;
-        int num;
+        int num = 0;
         if(lista->first != NULL){
             last = lista->first;
             num++;
@@ -286,9 +293,11 @@ void* sllRemovespec(Sllist* lista,void* key,int(*cmp)(void*,void*)){
 
 void* sllGetnext(Sllist* lista){
     if(lista != NULL){
+        void* retorno;
         if(lista->cur != NULL){
             lista->cur = lista->cur->next;
-            return lista->cur->data;
+            retorno = lista->cur->data;
+            return retorno;
         }
     }
     return NULL;

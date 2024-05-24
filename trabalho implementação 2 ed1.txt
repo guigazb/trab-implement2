@@ -29,9 +29,9 @@ O trabalho é individual
 Roteiro para teste:
 1 Crie uma coleção
 2 Insira tres elementos na coleção
-3 Liste os elementos da Colecao
-4 Consulte um dos elementos da coleçào
-5 remova o segundo elemento inserido na colecao
-6 Liste os elementos da coleçào
-7 Esvazie a colecao
-8 Liste os elementos da coleçào
+3 Liste os elementos da Colecão
+4 Consulte um dos elementos da coleção
+5 remova o segundo elemento inserido na colecão
+6 Liste os elementos da coleção
+7 Esvazie a colecão
+8 Liste os elementos da coleção

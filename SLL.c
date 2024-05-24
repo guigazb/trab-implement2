@@ -267,7 +267,7 @@ void* sllRemovespec(Sllist* lista,void* key,int(*cmp)(void*,void*)){
     if(lista != NULL && key != NULL){
         if(lista->first != NULL){
         Sllnode* del = lista->first;
-        Sllnode* beforedel;
+        Sllnode* beforedel = NULL;
         void* salvo;
         int stat = cmp(key,del->data);
         while(stat != true && del->next != NULL){

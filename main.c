@@ -41,7 +41,7 @@ int cmp(void* a, void* b){
     return -1;
 }
 
-int listaClean(Sllist* lista){ // aparentemente consertado, averiguar - tá quebrado mesmo
+int listaClean(Sllist* lista){ 
     if(lista != NULL){
         anime* delete;
         while(delete != NULL){
@@ -203,7 +203,7 @@ int main(){
             }
             case 7:{
                 if(lista != NULL){
-                    if(listaClean(lista) == true){ // quebra o código
+                    if(listaClean(lista) == true){ 
                        printf("A colecao foi esvaziada \n");
                        printf("\n");
                        break;

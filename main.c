@@ -13,16 +13,15 @@ typedef struct {
 }anime;
 
 
-void listarColecao(Sllist *lista){ // ainda contém erros, mas lista corretamente
+void listarColecao(Sllist *lista){ 
     int ind = 0;
     int num = sllNumNodes(lista);
-    anime *var = (anime*) sllGetfirstcur(lista);// consertar
+    anime *var = (anime*) sllGetfirstcur(lista);
     if(lista != NULL && num > 0){
         while(var != NULL){
             printf("item %d: \n",ind + 1);
             printf("nome: %s ,preco: %d ,duracao: %.2f \n", var->nome, var->episodios, var->nota);
-            var = (anime*)sllGetnext(lista); // consertar
-            ind++;
+            var = (anime*)sllGetnext(lista);
         }
     }else if(num <= 0){
             printf("sem itens para imprimir \n");
@@ -41,11 +40,11 @@ int cmp(void* a, void* b){
     return -1;
 }
 
-int listaClean(Sllist* lista){ // aparentemente consertado, averiguar
+int listaClean(Sllist* lista){ // aparentemente consertado, averiguar - tá quebrado mesmo
     if(lista != NULL){
-        int numItens = sllNumNodes(lista);
-        for(int i = 0; i <numItens; i++){
-            sllRemovelast(lista);
+        anime* delete;
+        while(delete != NULL){
+            delete = (anime*) sllRemovelast(lista);
         } 
         return true;
     }
@@ -53,7 +52,7 @@ int listaClean(Sllist* lista){ // aparentemente consertado, averiguar
 }
 
 int main(){
-    //criar cofo, inserir elementos, e para cada elemento inserido incrementar a variavel Atual para listar o cofo posteriormente
+    //criar colecao, inserir elementos
     
     int flag = true;
     void listarColecao(Sllist *lista);
@@ -155,9 +154,9 @@ int main(){
                 printf("erro de parametro \n");
                 break;
             }
-            case 5:{ // consertar a função de listar
+            case 5:{ 
                 if(lista != NULL){
-                    listarColecao(lista); // mata o código
+                    listarColecao(lista);
                     break;
                 }
                 printf("erro de parametro \n");

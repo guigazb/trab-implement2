@@ -295,9 +295,11 @@ void* sllGetnext(Sllist* lista){
     if(lista != NULL){
         void* retorno;
         if(lista->cur != NULL){
-            lista->cur = lista->cur->next;
-            retorno = lista->cur->data;
-            return retorno;
+            if(lista->cur->next != NULL){
+                lista->cur = lista->cur->next;
+                retorno = lista->cur->data;
+                return retorno;
+            }
         }
     }
     return NULL;

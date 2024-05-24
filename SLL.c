@@ -128,7 +128,7 @@ void *sllRemovelast( Sllist *lista){
             del = lista->first;
             if(del->next == NULL){
                 data = del->data;
-                lista->first == NULL;
+                lista->first = NULL;
                 free(del);
                 return data;
             }

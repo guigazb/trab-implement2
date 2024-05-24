@@ -130,7 +130,7 @@ void *sllRemovelast( Sllist *lista){
                 data = del->data;
                 lista->first = NULL;
                 free(del);
-                return data;
+                return data; 
             }
             while(del->next != NULL){
                 beforedel = del;

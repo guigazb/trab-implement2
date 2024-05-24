@@ -20,8 +20,9 @@ void listarColecao(Sllist *lista){
     if(lista != NULL && num > 0){
         while(var != NULL){
             printf("item %d: \n",ind + 1);
-            printf("nome: %s ,preco: %d ,duracao: %.2f \n", var->nome, var->episodios, var->nota);
+            printf("nome: %s ,episodios: %d ,nota: %.2f \n", var->nome, var->episodios, var->nota);
             var = (anime*)sllGetnext(lista);
+            ind++;
         }
     }else if(num <= 0){
             printf("sem itens para imprimir \n");
@@ -79,15 +80,18 @@ int main(){
             case 1:{
                 if(lista!= NULL){
                     printf("existe uma colecao criada \n");
-                    printf("destrua a colecao anterior antes de criar uma nova\n");
+                    printf("destrua a colecao anterior antes de criar uma nova \n");
+                    printf("\n");
                     break;
                 }
                 lista = sllCreate();
                 if(lista != NULL){
                     printf("Colecao criada com sucesso! \n");
+                    printf("\n");
                     break;
                 }else{
                     printf("a coleção não foi criada, tente novamente... \n");
+                    printf("\n");
                     break;
                 }
             }
@@ -102,13 +106,17 @@ int main(){
                     scanf("%f", &item->nota);
                     if(sllInsertAsLast(lista,item) == true){ 
                         printf("anime inserido com sucesso \n");
+                        printf("\n");
                         break;
                     }else{
                         printf("Erro ao inserir anime \n");
+                        printf("\n");
                         break;
                     }
                 }
                 printf("erro de parametro \n");
+                printf("crie uma colecao antes... \n");
+                printf("\n");
                 break;
             }
             case 3:{
@@ -122,13 +130,17 @@ int main(){
                     scanf("%f", &item->nota);
                     if(sllRemovespec(lista, item, cmp) != NULL){
                         printf("item removido com sucesso! \n");
+                        printf("\n");
                         break;
                     }else{
                        printf("nao foi possivel remover o item \n");
+                       printf("\n");
                        break; 
                     }
                 }
                 printf("erro de parametro \n");
+                printf("crie uma colecao antes ou insira um item valido... \n");
+                printf("\n");
                 break;
             }
             case 4:{
@@ -145,57 +157,75 @@ int main(){
                     if(chave != NULL){
                         printf("anime encontrado ! \n");
                         printf("Nome: %s, episodios: %d, nota: %.2f \n", chave->nome, chave->episodios, chave->nota);
+                        printf("\n");
                         break;
                     }else{
                         printf("O anime nao foi encontrado \n");
+                        printf("\n");
                         break;
                     }  
                 }
                 printf("erro de parametro \n");
+                printf("crie uma colecao antes ou insira um item valido... \n");
+                printf("\n");
                 break;
             }
             case 5:{ 
                 if(lista != NULL){
+                    printf("aqui estao os itens da colecao: \n");
                     listarColecao(lista);
+                    printf("\n");
                     break;
                 }
                 printf("erro de parametro \n");
+                printf("crie uma colecao antes ... \n");
+                printf("\n");
                 break;
             }
             case 6:{
                 if(lista != NULL){
                     if(sllDestroy(lista) == true){
                         printf("Colecao destruida \n");
+                        printf("\n");
                         lista = NULL;
                         break;
                     }else{
                         printf("A colecao nao foi destruida \n");
                         printf("esvazie a colecao antes de destruir \n");
+                        printf("\n");
                         break;
                     }
                 }
                 printf("erro de parametro \n");
+                printf("crie uma colecao antes ... \n");
+                printf("\n");
                 break;
             }
             case 7:{
                 if(lista != NULL){
                     if(listaClean(lista) == true){ // quebra o código
                        printf("A colecao foi esvaziada \n");
+                       printf("\n");
                        break;
                     }else{
                       printf("A colecao nao foi esvaziada \n");
+                      printf("\n");
                       break;
                     }
                 }
                 printf("erro de parametro \n");
+                printf("crie uma colecao antes ... \n");
+                printf("\n");
                 break;
             }
             case 0:{
                 printf("sistema encerrado com sucesso! \n");
+                printf("\n");
                 return 0;
             }
             default:{
                 printf("opcao invalida \n");
+                printf("\n");
                 break;
             }
         }

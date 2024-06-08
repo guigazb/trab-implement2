@@ -99,7 +99,7 @@ int main(){
                 anime *item = (anime *) malloc(sizeof(anime));
                 if(lista != NULL && item != NULL){
                     printf("Nome: ");
-                    scanf("%s", item->nome);
+                    scanf(" %[^\n]s", item->nome);
                     printf("episodios: ");
                     scanf("%d", &item->episodios);
                     printf("nota: ");
@@ -123,7 +123,7 @@ int main(){
                 anime *item = (anime *) malloc(sizeof(anime));
                 if(lista != NULL && item != NULL){
                     printf("Nome: ");
-                    scanf("%s", item->nome);
+                    scanf(" %[^\n]s", item->nome);
                     printf("episodios: ");
                     scanf("%d", &item->episodios);
                     printf("nota: ");
@@ -147,7 +147,7 @@ int main(){
                 anime *item = (anime*) malloc(sizeof(anime));
                 if(lista != NULL && item != NULL){
                     printf("Nome: ");
-                    scanf("%s", item->nome);
+                    scanf(" %[^\n]s", item->nome);
                     printf("episodios: ");
                     scanf("%d", &item->episodios);
                     printf("nota: ");
